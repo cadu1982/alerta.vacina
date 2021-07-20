@@ -3,13 +3,19 @@ const fetch = require('node-fetch')
 
   fetch ('https://vacina.campinas.sp.gov.br/agendamento-grupos',)
     .then(res => res.text())
-    .then(body => console.log(body));
+    .then(body => {
+      // console.log(body)
+      var re_linha = /Pessoas a partir de [0-9]{2}/; // Pessoas a partir de 33 anos
+      var linhaIdade = re_linha.exec(body)
+      var re_idade = /[0-9]{2}/;
+      var idade = re_idade.exec(linhaIdade)
+      console.log("Partiu vacinar quem tem: " + idade[0]);
 
-    var str = "text";
-    var re = /(Pessoas a partir de[0-9]{2})/;
-    var found = str.match(re);
+    }
+  );
+    //
 
-  console.log(found);
+
 
 //  const body  = "a partir de [0-9]{2}";
   //const regexWhiteSpace = /\s/g;
