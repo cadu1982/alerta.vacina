@@ -1,5 +1,7 @@
 const fetch = require('node-fetch')
-//var RegexPaser = require('regex-parser')
+const nodemailer = require("nodemailer")
+const dotenv = require("dotenv")
+
 
   fetch ('https://vacina.campinas.sp.gov.br/agendamento-grupos',)
     .then(res => res.text())
@@ -13,29 +15,33 @@ const fetch = require('node-fetch')
 
     }
   );
-    //
 
+dotenv.config()
 
+// PEGAR IDADE DO ARQUIVO ?
+var idade_arquivo =
 
-//  const body  = "a partir de [0-9]{2}";
-  //const regexWhiteSpace = /\s/g;
-  //const [nome, sobrenome] = nomeCompleto.replace(regexWhiteSpace,'').split(',')
+if (idade_arquivo == idade){
+  console.log("São iguais, faço nada !")
+}
+else: //manda e-mail
+  let transporter = nodemailer.createTransport({
+      host:"smtp.gmail.com",
+      port:465,
+      secure:true,
+      auth: {
+          user:"LOGIN",
+          pass:"PASSWORD"
+      }
+  })
 
-  //console.log('body:',body)
-  //console.log('sobrenome:',sobrenome)
-
-    //.then().findall("a partir de [0-9]{2}",(text))[0]
-    //.then().findall("[0-9]{2}",(linha))[0]
-    //console.log(text)
-
-    //.then(res => res.text())
-    //.then(body => console.log(body))
-    //.catch(e => console.log("Deu Erro:" + e,message))
-
-    //var Regex = require("regex");
-    //var regex = new Regex("a partir de [0-9]{2}")
-    //console.log(Regex)
-
-    //let text = "a partir de 35";
-    //let n = text.search(/a partir de 35/i);
-    //console.log(text)
+  transporter.sendMail({
+      from: "Cadu <cadu.lp@gmail.com>",
+      to: "caca-andrdae@bol.com.br",
+      subject: "Mudou a idade para agendar a vacina !!!",
+      text: "Favor verificar no site: https://vacina.campinas.sp.gov.br/agendamento-grupos"
+  }).then(message => {
+        console.log(message)
+  }).catch(err => {
+        console.log(err)
+  })
